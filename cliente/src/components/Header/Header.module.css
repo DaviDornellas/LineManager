@@ -1,10 +1,10 @@
 .header {
   top: 0;
   left: 0;
-  width: 91.6%;
+  width: 91.0%;
   height: 8vh;
   padding: 20px 70px;
-  background-color: #979797;
+  background-color:var(--gray);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -15,14 +15,14 @@
 }
 
 .header h1 {
-  color: white;
+  color: var(--white);
   font-size: 36px;
 }
 
 .navbar a {
   position: relative;
   font-size: 18px;
-  color: white;
+  color: var(--white);
   font-weight: 500;
   text-decoration: none;
   margin-left: 40px;
@@ -41,4 +41,9 @@
 
 .navbar a:hover::before {
   width: 100%;
+}
+.icon {
+  width: 40px; /* Ajuste o tamanho conforme necessário */
+  height: 40px;
+  vertical-align: middle;
 }

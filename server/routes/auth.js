@@ -92,6 +92,49 @@ router.get("/me", async (req, res) => {
   }
 });
 
+router.get("/users", async (req, res) => {
+  try {
+    // Recupera o token do cabeçalho Authorization
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: "Token não fornecido ou inválido" });
+    }
+
+    // Extrai o token
+    const token = authHeader.split(' ')[1];
+
+    try {
+      // Verifica e decodifica o token
+      const decoded = jwt.verify(token, secretKey);
+
+      // Busca o usuário autenticado para verificar permissões
+      const authenticatedUser = await User.findByPk(decoded.id);
+
+      if (!authenticatedUser) {
+        return res.status(404).json({ error: "Usuário autenticado não encontrado" });
+      }
+
+      // Opcional: verificar se o usuário tem permissão para acessar essa rota
+      // Exemplo: if (!authenticatedUser.isAdmin) { ... }
+
+      // Busca todos os usuários no banco de dados
+      const users = await User.findAll({
+        attributes: ["id", "username", "email","role"], // Seleciona apenas os campos desejados
+      });
+
+      res.json(users); // Retorna a lista de usuários
+    } catch (err) {
+      // Erro na verificação do token
+      return res.status(401).json({ error: "Token inválido ou expirado" });
+    }
+  } catch (error) {
+    // Erro genérico no servidor
+    res.status(500).json({ error: "Erro ao buscar usuários" });
+  }
+});
+
+
 
 
 

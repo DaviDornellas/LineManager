@@ -7,6 +7,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Admin from "./pages/Admin/Admin";
 
 
 
@@ -18,13 +19,20 @@ function Routas() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/produtos" element={<Produtos />} />
-        <Route path="/produtoscheck" element={<Produtoscheck />} />
+       
+      
 
         <Route element={<PrivateRoute roles={['user', 'admin']} />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/produtos" element={<Produtos />} />
+          <Route path="/produtoscheck" element={<Produtoscheck />} />
+          
           
         </Route>
+        <Route element={<PrivateRoute roles={['admin']} />}>
+          <Route path="/admin" element={<Admin />} />
+        </Route>
+        
 
 
       </Routes>
